@@ -1,0 +1,79 @@
+lambda expressions:
+
+Lambda expressions in Java 8 introduced a powerful and concise way to represent anonymous functions. They significantly
+enhance the Java language's expressive power and allow for more functional-style programming. Here are some key notes about Java 8 lambda expressions:
+Syntax: Lambda expressions have a compact syntax and are denoted by the -> symbol. The general syntax is
+(parameters) -> { body }, where the parameters represent the input to the lambda expression, and the body represents the code to be executed.
+FunctionalInterfaces: Lambda expressions are often used in the context of functional interfaces. A functional interface is an interface that has exactly one abstract method,
+ which serves as the target for the lambda expression. Java 8 comes with many built-in functional interfaces in the java.util.function package, such as Predicate, Consumer, Function, and Supplier.
+Example: Here's an example of a lambda expression that implements the Runnable interface, which has a single abstract method run():.
+Type Inference: In most cases, the types of parameters in a lambda expression can be inferred by the compiler.
+This allows you to write more concise code by omitting the parameter types explicitly.Target Typing: Lambda expressions
+can be used in contexts where a functional interface is expected. The lambda expression is automatically matched with
+the abstract method of the functional interface, based on the parameter types and return type.
+Accessing Variables: Lambda expressions can access local variables from the enclosing scope, as long as the variables are
+effectively final (i.e., their value doesn't change after initialization). This feature is known as "capturing" variables.
+Method References: Method references provide another way to simplify lambda expressions when they call a single existing method.
+ They allow you to refer to a method by its name instead of providing a lambda expression.
+Stream API: Lambda expressions are heavily used in conjunction with the Stream API introduced in Java 8. Streams provide a
+functional-style way to perform bulk data operations on collections, making code more concise and readable.
+Benefits: Lambda expressions promote more functional programming paradigms, leading to cleaner and more readable code.
+They reduce the need for anonymous inner classes, making the code more expressive and less cluttered.
+Performance: In many cases, lambda expressions have comparable performance to anonymous inner classes.
+The JVM optimizes the implementation of lambda expressions to minimize overhead.
+
+
+Interface’s Default and Static Methods
+
+Java 8 extends interface declarations with two new concepts: default and static methods. Default methods make interfaces
+somewhat similar to traits but serve a bit different goal. They allow adding new methods to existing interfaces without breaking
+the binary compatibility with the code written for older versions of those interfaces.
+The difference between default methods and abstract methods is that abstract methods are required to be implemented. But
+default methods are not. Instead, each interface must provide so called default implementation and all the implementers will
+inherit it by default (with a possibility to override this default implementation if needed).
+The interface Defaulable declares a default method notRequired() using keyword default as part of the method definition.
+One of the classes, DefaultableImpl, implements this interface leaving the default method implementation as-is. Another one,
+OverridableImpl , overrides the default implementation and provides its own.
+Another interesting feature delivered by Java 8 is that interfaces can declare (and provide implementation) of static methods.
+Default methods implementation on JVM is very efficient and is supported by the byte code instructions for method invocation.
+Default methods allowed existing Java interfaces to evolve without breaking the compilation process. The good examples are the
+plethora of methods added to java.util.Collection interface: stream(), parallelStream(), forEach(), removeIf(), . . .
+Though being powerful, default methods should be used with a caution: before declaring method as default it is better to think
+twice if it is really needed as it may cause ambiguity and compilation errors in complex hierarchies.
+
+Optional Class
+
+The NullPointerException is by far the most popular cause of Java application failures. Long time ago the great Google
+Guava project introduced the Optional as a solution to NullPointerException, discouraging codebase pollution with null checks
+and encouraging developers to write cleaner code. Inspired by Google Guava, the Optional is now a part of Java 8 library.
+Optional is just a container: it can hold a value of some type T or just be null. It provides a lot of useful methods so the explicit
+null checks have no excuse anymore. Please refer to official Java 8 documentation for more details.
+We are going to take a look on two small examples of Optional usages: with the nullable value and with the value which does
+not allow null.The isPresent() method returns true if this instance of Optional has non-null value and false otherwise. The orElseGet()
+method provides the fallback mechanism in case Optional has null value by accepting the function to generate the default one.
+The map() method transforms the current Optional’s value and returns the new Optional instance. The orElse() method is
+similar to orElseGet() but instead of function it accepts the default value.
+
+Java STREAM API
+
+ The Stream API was introduced in Java 8 as a powerful tool for processing sequences of data in a functional and declarative manner.
+It enables developers to perform complex data manipulations with concise and readable code. A stream is an abstract
+sequence of elements that supports various operations to perform computations upon those elements. It does not store data
+but allows for pipelined transformations and aggregations.
+Functional Approach: The Stream API promotes functional-style programming, where operations are applied to streams via lambda
+expressions and functional interfaces. This leads to more expressive and declarative code.
+Laziness and Short-Circuiting: Streams support laziness, which means intermediate operations are executed on demand and
+only as much as required. Short-circuiting operations like findFirst, findAny, and anyMatch allow early termination of a
+stream pipeline.Pipeline Operations: Stream operations can be divided into intermediate and terminal operations. Intermediate
+operations include filter, map, sorted, etc., which return a new stream. Terminal operations like forEach, collect, reduce, etc.,
+produce a result or a side effect.Common Operations: The Stream API provides a wide range of operations for data manipulation,
+including filtering, mapping, sorting, reducing, finding, matching, and more. These operations can be combined to create
+complex data processing pipelines.Parallelism: Streams can be processed in parallel to take advantage of multiple cores,
+providing better performance for large datasets. Parallel streams can be created using the parallel() method.Stream Sources:
+Streams can be created from various data sources, such as collections, arrays, I/O channels,generators, and even from functions that generate elements on the fly.
+Collectors:The Collectors class provides a set of built-in collectors to convert the elements of a stream into various data
+structures, such as lists, sets, maps, and strings.Optional: The Stream API often works in conjunction with Optional to
+handle potentially absent values safely and avoid null pointer exceptions.Limitations: While the Stream API is powerful,
+it may not always be the most efficient solution for all use cases, especially for small datasets or complex stateful transformations.
+Integration with Existing APIs: The Stream API seamlessly integrates with existing Java APIs like collections, making it
+easier to refactor existing code and leverage the functional programming paradigm.
